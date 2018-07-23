@@ -63,7 +63,7 @@
         /// </summary>
         public int Size => this.head > this.tail ?
                            this.Capacity - this.head + this.tail + 1 :
-                           this.tail - this.head;
+                           this.tail - this.head + 1;
 
         #endregion
 
