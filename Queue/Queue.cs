@@ -177,6 +177,11 @@
         /// </returns>
         public bool IsEmpty() => this.head == this.tail;
 
+        /// <summary>
+        /// Reduces this queue's capacity to its size.
+        /// </summary>
+        public void ShrinkToFit() => Array.Resize(ref this.elements, this.Size);
+
         #endregion
 
         #region GetEnumerator Methods
