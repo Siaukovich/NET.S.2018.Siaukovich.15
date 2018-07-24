@@ -49,9 +49,9 @@
         /// </exception>
         public Queue(int initialCapacity = 4)
         {
-            if (initialCapacity <= 0)
+            if (initialCapacity < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(initialCapacity), "Capacity can not be <= 0.");
+                throw new ArgumentOutOfRangeException(nameof(initialCapacity), "Capacity can not be negative.");
             }
 
             this.elements = new T[initialCapacity];
@@ -92,7 +92,7 @@
 
                 if (initialCapacity <= 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(initialCapacity), "Capacity can not be <= 0.");
+                    throw new ArgumentOutOfRangeException(nameof(initialCapacity), "Capacity can not be negative.");
                 }
             }
         }
