@@ -41,12 +41,48 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Queue{T}"/> class.
         /// </summary>
-        /// <param name="initialLength">
-        /// Queue's initial length.
+        /// <param name="initialCapacity">
+        /// Queue's initial capacity.
         /// </param>
-        public Queue(int initialLength = 4)
+        public Queue(int initialCapacity = 4)
         {
-            this.elements = new T[initialLength];
+            this.elements = new T[initialCapacity];
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Queue{T}"/> class.
+        /// </summary>
+        /// <param name="values">
+        /// Values that will be added to the dictionary.
+        /// </param>
+        /// <param name="initialCapacity">
+        /// Queue's initial capacity.
+        /// </param>
+        public Queue(IEnumerable<T> values, int initialCapacity = 4)
+        {
+            this.elements = new T[initialCapacity];
+
+            foreach (T value in values)
+            {
+                this.Enqueue(value);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Queue{T}"/> class.
+        /// Initial capacity will be twice passed ICollection's length. 
+        /// </summary>
+        /// <param name="values">
+        /// Values that will be added to the dictionary.
+        /// </param>
+        public Queue(ICollection<T> values)
+        {
+            this.elements = new T[2 * values.Count];
+
+            foreach (T value in values)
+            {
+                this.Enqueue(value);
+            }
         }
 
         #endregion
