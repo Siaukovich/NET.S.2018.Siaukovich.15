@@ -44,8 +44,16 @@
         /// <param name="initialCapacity">
         /// Queue's initial capacity.
         /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown if initialCapacity &lt;= 0.
+        /// </exception>
         public Queue(int initialCapacity = 4)
         {
+            if (initialCapacity <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(initialCapacity), "Capacity can not be <= 0.");
+            }
+
             this.elements = new T[initialCapacity];
         }
 
@@ -58,13 +66,34 @@
         /// <param name="initialCapacity">
         /// Queue's initial capacity.
         /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown if initialCapacity &lt;= 0.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if values is null.
+        /// </exception>
         public Queue(IEnumerable<T> values, int initialCapacity = 4)
         {
+            ThrowForInvalidParameters();
+
             this.elements = new T[initialCapacity];
 
             foreach (T value in values)
             {
                 this.Enqueue(value);
+            }
+
+            void ThrowForInvalidParameters()
+            {
+                if (values == null)
+                {
+                    throw new ArgumentNullException(nameof(values));
+                }
+
+                if (initialCapacity <= 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(initialCapacity), "Capacity can not be <= 0.");
+                }
             }
         }
 
@@ -75,8 +104,16 @@
         /// <param name="values">
         /// Values that will be added to the dictionary.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if values is null.
+        /// </exception>
         public Queue(ICollection<T> values)
         {
+            if (values == null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
+
             this.elements = new T[2 * values.Count];
 
             foreach (T value in values)
