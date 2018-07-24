@@ -353,7 +353,7 @@
 
                 this.initialVersion = queue.version;
                 this.queue = queue;
-                this.position = -1;
+                this.position = queue.head - 1;
             }
 
             #endregion
@@ -392,6 +392,7 @@
                 }
 
                 this.position++;
+                this.position %= this.queue.Capacity;
 
                 return this.position < this.queue.Size;
             }
@@ -401,7 +402,7 @@
             /// </summary>
             public void Reset()
             {
-                this.position = -1;
+                this.position = this.queue.head - 1;
             }
 
             /// <summary>
