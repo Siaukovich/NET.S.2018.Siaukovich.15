@@ -1,4 +1,4 @@
-﻿namespace EpamDay15
+﻿namespace CustomQueue
 {
     using System;
     using System.Collections;
