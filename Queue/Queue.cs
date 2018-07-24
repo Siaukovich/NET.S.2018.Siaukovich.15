@@ -340,8 +340,16 @@
             /// <param name="queue">
             /// Queue that will be enumerated.
             /// </param>
+            /// <exception cref="ArgumentNullException">
+            /// Thrown if passed queue is null.
+            /// </exception>
             public QueueEnumerator(Queue<T> queue)
             {
+                if (queue == null)
+                {
+                    throw new ArgumentNullException(nameof(queue));
+                }
+
                 this.initialVersion = queue.version;
                 this.queue = queue;
                 this.position = -1;
