@@ -259,7 +259,8 @@
         /// </summary>
         private void Resize()
         {
-            int newCapacity = this.Capacity * 2;
+            int newCapacity = this.Capacity != 0 ? 2 * this.Capacity : 1;
+            
             var newElements = new T[newCapacity];
 
             CopyElements();
