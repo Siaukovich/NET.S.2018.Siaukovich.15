@@ -219,7 +219,16 @@
         /// <summary>
         /// Reduces this queue's capacity to its size.
         /// </summary>
-        public void ShrinkToFit() => Array.Resize(ref this.elements, this.Size);
+        public void ShrinkToFit()
+        {
+            var newElements = new T[this.Size];
+            
+            this.CopyElements(newElements);
+
+            this.head = 0;
+            this.tail = this.Capacity;
+            this.elements = newElements;
+        }
 
         #endregion
 
@@ -265,41 +274,11 @@
             
             var newElements = new T[newCapacity];
 
-            CopyElements();
+            this.CopyElements(newElements);
 
             this.head = 0;
             this.tail = this.Capacity;
             this.elements = newElements;
-
-            // Copies elements from this.elements 
-            // array to newElements array.
-            void CopyElements()
-            {
-                int oldElementsIndex = this.head;
-                int newElementsIndex = 0;
-
-                if (this.tail <= this.head)
-                {
-                    int size = this.Size;
-                    while (oldElementsIndex < size)
-                    {
-                        newElements[newElementsIndex] = this.elements[oldElementsIndex];
-
-                        newElementsIndex++;
-                        oldElementsIndex++;
-                    }
-
-                    oldElementsIndex = 0;
-                }
-
-                while (oldElementsIndex < this.tail)
-                {
-                    newElements[newElementsIndex] = this.elements[oldElementsIndex];
-
-                    newElementsIndex++;
-                    oldElementsIndex++;
-                }
-            }
         }
 
         /// <summary>
@@ -310,6 +289,45 @@
         #endregion
 
         #region Enumerator
+
+        #region Private Helpers
+
+        /// <summary>
+        /// Copies elements from this.elements
+        /// array to newElements array.
+        /// </summary>
+        /// <param name="newElements">
+        /// Array for new elements.
+        /// </param>
+        private void CopyElements(T[] newElements)
+        {
+            int oldElementsIndex = this.head;
+            int newElementsIndex = 0;
+
+            if (this.tail <= this.head)
+            {
+                int size = this.Size;
+                while (oldElementsIndex < size)
+                {
+                    newElements[newElementsIndex] = this.elements[oldElementsIndex];
+
+                    newElementsIndex++;
+                    oldElementsIndex++;
+                }
+
+                oldElementsIndex = 0;
+            }
+
+            while (oldElementsIndex < this.tail)
+            {
+                newElements[newElementsIndex] = this.elements[oldElementsIndex];
+
+                newElementsIndex++;
+                oldElementsIndex++;
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// The Queue's class enumerator.
