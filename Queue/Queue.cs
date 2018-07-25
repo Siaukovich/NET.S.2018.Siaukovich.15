@@ -134,9 +134,7 @@
         /// <summary>
         /// Gets amount of elements in queue.
         /// </summary>
-        public int Size => this.head > this.tail ?
-                           this.Capacity - this.head + this.tail + 1 :
-                           this.tail - this.head + 1;
+        public int Size { get; private set; }
 
         #endregion
 
@@ -150,7 +148,7 @@
         /// </param>
         public void Enqueue(T value)
         {
-            if (this.Size == this.elements.Length)
+            if (this.Size == this.Capacity)
             {
                 this.Resize();
             }
@@ -158,6 +156,8 @@
             this.elements[this.tail] = value;
 
             MoveTail();
+
+            this.Size++;
 
             this.UpdateVersion();
 
@@ -190,6 +190,8 @@
             T value = this.elements[this.head];
             
             MoveHead();
+
+            this.Size--;
 
             this.UpdateVersion();
 
@@ -230,7 +232,7 @@
         /// The <see cref="QueueEnumerator"/>.
         /// This queue's enumerator.
         /// </returns>
-        public QueueEnumerator GetEnumerator() => new QueueEnumerator();
+        public QueueEnumerator GetEnumerator() => new QueueEnumerator(this);
 
         /// <summary>
         /// Returns this queue's enumerator.
@@ -266,7 +268,7 @@
             CopyElements();
 
             this.head = 0;
-            this.tail = this.Capacity - 1;
+            this.tail = this.Capacity;
             this.elements = newElements;
 
             // Copies elements from this.elements 
@@ -290,7 +292,7 @@
                     oldElementsIndex = 0;
                 }
 
-                while (oldElementsIndex <= this.tail)
+                while (oldElementsIndex < this.tail)
                 {
                     newElements[newElementsIndex] = this.elements[oldElementsIndex];
 
