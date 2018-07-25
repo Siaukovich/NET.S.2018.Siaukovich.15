@@ -223,11 +223,22 @@
         {
             var newElements = new T[this.Size];
             
-            this.CopyElements(newElements);
+            this.CopyElementsTo(newElements);
 
             this.head = 0;
             this.tail = this.Capacity;
             this.elements = newElements;
+
+            this.UpdateVersion();
+        }
+
+        public void Clear()
+        {
+            this.head = 0;
+            this.tail = 0;
+            this.Size = 0;
+            
+            this.UpdateVersion();
         }
 
         #endregion
@@ -274,7 +285,7 @@
             
             var newElements = new T[newCapacity];
 
-            this.CopyElements(newElements);
+            this.CopyElementsTo(newElements);
 
             this.head = 0;
             this.tail = this.Capacity;
@@ -299,7 +310,7 @@
         /// <param name="newElements">
         /// Array for new elements.
         /// </param>
-        private void CopyElements(T[] newElements)
+        private void CopyElementsTo(T[] newElements)
         {
             int oldElementsIndex = this.head;
             int newElementsIndex = 0;
