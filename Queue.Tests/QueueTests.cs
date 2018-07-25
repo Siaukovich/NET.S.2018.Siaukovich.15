@@ -76,6 +76,36 @@
         }
 
         [Test]
+        public void EnqueueDequeue_SavesOrder()
+        {
+            var elements = Enumerable.Range(1, 20).ToArray();
+            var q = new CustomQueue.Queue<int>();
+            foreach (int element in elements)
+            {
+                q.Enqueue(element);
+            }
+
+            foreach (int element in elements)
+            {
+                if (element != q.Dequeue())
+                {
+                    Assert.Fail();
+                }
+            }
+
+            Assert.That(q.IsEmpty());
+        }
+
+        [Test]
+        public void Clear_EmptyQueue()
+        {
+            var q = new CustomQueue.Queue<int>(Enumerable.Range(1, 20));
+            q.Clear();
+            
+            Assert.That(q.IsEmpty());
+        }
+
+        [Test]
         public void Enqueue_ValidInput_ValidCapacityAndSizeAndEnumerationOrderAfterResizing()
         {
             var elements = Enumerable.Range(1, 20).ToArray();
